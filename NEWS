@@ -1,0 +1,75 @@
+Changes in version 1.1.4 (2021-05-04)
+
+Other
+    o   fixed URLs
+
+Changes in version 1.1.2 (2021-05-03)
+
+Other
+    o   update arvicola dataset to 3-D form (secr>=3.0.1)
+    o   add rmarkdown to Suggests as requested by CRAN 
+    o   packages sp and igraph moved from Depends to Imports
+    o   Depends R >= 3.5.0 (serialization issue)
+
+Changes in version 1.1.1 (2017-12-13)
+
+Other
+    o   avoid change of directory in examples
+    o   updated vignette
+
+Changes in version 1.1.0 (2017-05-03)
+
+Other
+    o   rgdal::readOGR used to read shapefiles (maptools::readShapexxx deprecated)
+    o   compatible secr 3.0.1
+
+Changes in version 1.0.5 (2015-01-11)
+
+Other
+    o   CITATION file uses package metadata
+
+Changes in version 1.0.4 (2014-12-08)
+
+New features or changed behaviour of old functions
+    o   none yet
+
+Other
+    o   editorial changes to help pages
+    o   removed dependency on rgeos (still required for clipmask)
+    o   replaced NA with zero in input to graph.adjacency 
+
+Changes in version 1.0.3 (2014-12-02)
+
+New features or changed behaviour of old functions
+    o   read.linearmask() allows for multiple Line objects within each
+    Lines object of a SpatialLinesDataFrame
+    o   subset.linearmask() acquires argument droplinesbeyond for
+    cleaning the SLDF attribute
+    o   snapPointsToLinearMask() now snaps to the vertices of the graph
+    attribute, rather than trying to use the maptools function snapPointsToLines()
+    o   showpath() also returns mask coordinates along each selected path
+    o   checkmoves() new utility function for detecting extreme moves
+    o   plot.linearmask() now uses plot.mask allowing a wider range of options
+
+Other
+    o   first CRAN release
+    o   addedge and deleteedge renamed addedges and deleteedges
+    o   vignette considers breaks in graph and new secr function 'checkmoves'
+
+Changes in version 1.0.1 (2014-11-02)
+
+New features or changed behaviour of old functions
+    o   read.linearmask will read directly from a polyline shapefile
+    o   interpoint distances within a line are coerced to the correct spacing value
+        (no longer simple Euclidean distances) 
+    o   direct and precise algorithm for placing mask points along lines (no longer calls spsample) 
+    o   edge editing functions redefined; function showedges() replaces showskips()
+    o   make.line() enhanced (randomstart, endbuffer, clusters, multiline masks etc.)
+    o   new function cleanskips() removes superfluous joins (automatic in read.linearmask)
+
+Bugs fixed
+    o   none yet
+
+Other
+    o   now 'Depends' on igraph package (always loaded)
+    o   no longer exports alongmask() (use make.line())
