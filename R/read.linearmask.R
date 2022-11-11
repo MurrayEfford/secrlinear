@@ -65,7 +65,7 @@ read.linearmask <- function (file = NULL, data = NULL, spacing = 10, spacingfact
             # spatialdata <- substring(spatialdata, 1, nchar(spatialdata)-4)
             # if (!requireNamespace(rgdal)) stop ("package rgdal is currently required")
             # data <- rgdal::readOGR(dsn = file, layer = spatialdata)
-            data <- as(st_read(file), "Spatial")
+            data <- as(st_read(file, quiet = TRUE), "Spatial")
         }
         else
             data <- read.table (file, ...)
