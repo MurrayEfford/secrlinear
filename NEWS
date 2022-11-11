@@ -1,3 +1,8 @@
+Changes in version 1.2.0 (2022-11-11)
+
+Other
+    o   removes dependency on rgeos, rgdal, maptools
+
 Changes in version 1.1.4 (2021-05-04)
 
 Other
