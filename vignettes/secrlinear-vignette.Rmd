@@ -22,9 +22,9 @@ almost entirely in stream channels. **secrlinear** provides functions
 to manipulate linear habitat masks (the 'linearmask' class) and to
 approximate distances within a network defined by a linear
 mask. The linear mask and network distance function may be used directly in
-**secr** functions such as `secr.fit`. Minor changes to **secr** in
-version 2.9.0 provided for the analysis of linear populations (e.g.,
-`sim.popn` now has a 'linear' option for its argument 'model2D').
+**secr** functions such as `secr.fit`. **secr** $\ge 2.9.0$ allows the 
+simulation and analysis of linear populations (e.g., `sim.popn` now has a 
+'linear' option for its argument 'model2D').
 
 \vspace{12pt}
 
@@ -50,7 +50,6 @@ warnings.
 
 ```{r setup, message = FALSE, warning = FALSE}
 library(secrlinear)   # also loads secr
-library(sp)
 library(igraph)       # to investigate edge lengths
 options(digits = 4)   # for more readable output
 inputdir <- system.file("extdata", package = "secrlinear")
@@ -72,15 +71,13 @@ habitatmap <-  paste0(inputdir, "/glymemap.txt")
 glymemask <- read.linearmask(file = habitatmap, spacing = 4)
 ```
 Now we can display the data:
-```{r plotglyme, eval = TRUE, fig.width = 7, fig.height = 3}
+```{r plotglyme, eval = TRUE, fig.width = 7, fig.height = 3.5}
 par(mar = c(1,1,4,1))
 plot(glymemask)
 plot(arvicola, add = TRUE, tracks = TRUE)
 plot(traps(arvicola), add = TRUE)
 ```
-<!-- \setkeys{Gin}{height=80mm, keepaspectratio=true} -->
-<!-- ![arvicolaplot][arvicolaplot] -->
-  
+
 **Fig. 1.** Water vole captures along R. Glyme in June 1984. Traps (red
   crosses) spanned 860 m of river bank.
   
@@ -156,7 +153,6 @@ New Zealand, based on data from Land Information New Zealand (see
 'silverstream.dbf' and 'silverstream.shx' in the 'extdata' folder of
 **secrlinear**.
 
-\setkeys{Gin}{height=85mm, keepaspectratio=true}
 ```{r silvermask, eval = TRUE}
 habitatmap <- paste0(inputdir, "/silverstream.shp")
 silverstreammask <- read.linearmask(file = habitatmap, spacing = 50)
@@ -171,21 +167,24 @@ these merge together in the plot.
 The discretized length of a complex mask will tend to be shorter than the
 original linear network as incomplete segments are dropped from the ends 
 of branches. See the following section for more details.
-```{r networklength, eval = FALSE}
-networklength <- sum(SpatialLinesLengths(attr(silverstreammask, "SLDF"))) / 1000
+```{r networklength, eval = TRUE}
+sldf <- attr(silverstreammask, "SLDF")
+networklength <- sum(sp::SpatialLinesLengths(sldf)) / 1000   # km
 discrepancy <- networklength - masklength(silverstreammask)  # km
 ```
 
-In this case the discrepancy is `r round(sum(SpatialLinesLengths(attr(silverstreammask, "SLDF"))) / 1000 -
-masklength(silverstreammask),2)` km.
+In this case the discrepancy is `r round(discrepancy,2)` km.
 
 ## Input from a SpatialLinesDataFrame
 
 The 'data' argument of `read.linearmask` may be a SpatialLinesDataFrame object. This allows for data to be imported from GIS sources other than shapefiles, and for selection of features, re-projection, or other manipulation. 
 
+**secrlinear** is based on classes defined in the package **sp**, but we use the more modern package **sf** to read the shapefile before converting to an **sp**  SpatialLinesDataFrame. For example,
+
 ```{r silvermask2, eval = FALSE}
 habitatmap <- paste0(inputdir, "/silverstream.shp")
-silverstreamSLDF <- as(st_read(habitatmap), 'Spatial')
+silverstreamsf <- st_read(habitatmap)
+silverstreamSLDF <- as(silverstreamsf, 'Spatial')
 silverstreammask <- read.linearmask(data = silverstreamSLDF, spacing = 50)
 ```
 
@@ -199,12 +198,12 @@ x <- seq(0, 4*pi, length = 200)
 xy <- data.frame(x = x*100, y = sin(x)*300)
 linmask <- read.linearmask(data = xy, spacing = 20)
 ```
-```{r plotlinmask, eval = FALSE}
+```{r plotlinmask, eval = TRUE}
 plot(linmask)
 ```
 
-\setkeys{Gin}{height=65mm, keepaspectratio=true}
-![linearmask][linearmask]
+<!-- \setkeys{Gin}{height=65mm, keepaspectratio=true} -->
+<!-- ![linearmask][linearmask] -->
 
 **Fig. 3.**  Artificial linear habitat mask. Each mask segment 
 is 20 m long (pixel centres are indicated by a grey dot).
@@ -238,7 +237,7 @@ distance computation for chosen points on the network:
 showpath(silverstreammask, lwd = 3)
 ```
 \setkeys{Gin}{height=85mm, keepaspectratio=true}
-![showpath][showpath]
+![][showpath]
 
 **Fig. 4.** Network path between two arbitrary points, displayed using
   `showpath`. The dashed line corresponds to the Euclidean distance. 
@@ -291,12 +290,10 @@ detectors spaced equally along each line in a linear mask, or in clustered patte
 trps <- make.line(linmask, detector = "proximity", n = 40, startbuffer = 0, by = 300,
                   endbuffer = 80, cluster = c(0,40,80), type = 'randomstart')
 ```
-```{r plotline, eval = FALSE}
+```{r plotline, eval = TRUE, fig.width = 7, fig.height = 3.5}
 plot(linmask)
-plot(trps, add = TRUE, detpar = list(pch = 16, cex = 1.5, col='red'))
+plot(trps, add = TRUE, detpar = list(pch = 16, cex = 1.2, col='red'))
 ```
-\setkeys{Gin}{height=65mm, keepaspectratio=true}
-![detectors][detectors]
 
 **Fig. 5.**  Detectors placed with `make.line`
 
@@ -379,8 +376,6 @@ plot(silverstreammask)
 plot(CH, add = TRUE, tracks = TRUE, varycol = TRUE, rad = 100, cappar = list(cex = 2))
 plot(tr, add = TRUE)
 ```
-<!-- \setkeys{Gin}{height=85mm, keepaspectratio=true} -->
-<!-- ![silverstreamCH][silverstreamCH] -->
 
 **Fig. 6.** Simulated detections of linear population. Colours vary
   (subtly) among individuals. Red crosses indicate trap
@@ -442,17 +437,15 @@ original mask (area `r round(maskarea(fit2DEuc$mask),1)` ha) and the
 estimated density is extrapolated across its full extent although we believe animals are confined to the riverbank: this makes little sense. For 1-D, the region is the length of 'glymemask' along the river 
 (`r round(masklength(fit1DNet$mask),2)` km).
 
-```{r plotregion, eval = FALSE}
+```{r plotregion, eval = TRUE, fig.width = 6.5, fig.height=3}
 par(mfrow = c(1,2), mar = c(1,1,1,1))
 plot(fit2DEuc$mask)
 plot(traps(arvicola), add = TRUE)
-mtext(side = 3,line = -1.5, "fit2DEuc$mask", cex = 1)
+mtext(side = 3,line = -1.8, "fit2DEuc$mask", cex = 0.9)
 plot(fit1DNet$mask)
 plot(traps(arvicola), add = TRUE)
-mtext(side = 3,line = -1.5,"fit1DNet$mask", cex = 1)
+mtext(side = 3,line = -1.8,"fit1DNet$mask", cex = 0.9)
 ```
-\setkeys{Gin}{height=55mm, keepaspectratio=true}
-![mask][masks]
 
 **Fig. 7.**  Comparison of 2-D and 1-D masks for water voles on R. Glyme. Traps in red.
 
@@ -504,7 +497,7 @@ strip.legend('right', legend = seq(0, 6.5, 0.5), col = topo.colors(13),
 plot(spine, add = TRUE, linecol = NA, cex = 0.3)
 ```
 \setkeys{Gin}{height=90mm, keepaspectratio=true}
-![disttospine][disttospine]
+![][disttospine]
 
 **Fig. 8.**  Computed covariate of Silverstream mask points -- distance in km from central channel (spine)
 
@@ -570,7 +563,7 @@ for (i in 1:nrow(OK)) {
 ```
 
 \setkeys{Gin}{height=90mm, keepaspectratio=true}
-![networklength][networklength]
+![][networklength]
 
 **Fig. 9.** Varying lengths of stream within 1 km of four arbitrarily located home range centres (yellow dots) (distances measured along network). Stream length associated with each centre depends on local habitat geometry.
 
@@ -643,21 +636,16 @@ summary(sims2)
   `pdot.contour`.  Many other functions have not been tested with
   linear inputs: please report problems.
 
-3. `ip.secr` has yet to be adapted for user-provided (non-Euclidean)
-  distances, and its default trap-revealed home range measure (`RPSV`)
-  is undefined for non-Euclidean distances, including network
-  distances.
+3. Area-search methods (polygon detector types) are not appropriate.
 
-4. Area-search methods (polygon detector types) are not appropriate.
-
-5. Linear search (transect detector types) are appropriate, and
+4. Linear search (transect detector types) are appropriate, and
   would be useful, but have yet to be implemented. The problem is that
   the numerical integration algorithm used in C code to predict
   overlap between home ranges and the searched transect requires that
   distances be computed on-the-fly for arbitrary locations, rather
   than from a pre-computed matrix.
 
-6. Two-dimensional masks are often constructed by placing a 'buffer'
+5. Two-dimensional masks are often constructed by placing a 'buffer'
 around the detector array. The appropriate buffer width is a multiple
 of the movement scale $\sigma$, perhaps $4\sigma$. A similar procedure
 may be followed for linear masks. We note that when movements (and
@@ -825,15 +813,8 @@ Efford and Mowat Ecology 2014).
 The terminal "buffer" on the linear mask (200--240 m beyond the
 terminal traps) was adequate, even for males.
 
-[arvicolaplot]: Arvicola.png "Arvicola plot"
-[linearmask]: linearmask.png
-[covariate]: covariate.png
 [disttospine]: disttospine.png
 [showpath]: showpath.png
-[detectors]: detectors.png
-[capthist]: capthist.png
-[silverstreamCH]: silverstreamCH.png
-[masks]: masks.png
 [networklength]: networklength.png
 
 [secr-manual.pdf]: https://www.otago.ac.nz/density/pdfs/secr-manual.pdf
