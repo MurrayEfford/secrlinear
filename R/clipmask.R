@@ -1,7 +1,7 @@
 ############################################################################################
 ## package 'secrlinear'
 ## clipmask.R
-## last changed 2014-08-29 2014-09-09 2014-12-03 2015-01-11
+## last changed 2022-11-11 untested
 ############################################################################################
 
 clipmask <- function (mask, traps, buffer = 100, clipvert = FALSE) {
@@ -9,15 +9,21 @@ clipmask <- function (mask, traps, buffer = 100, clipvert = FALSE) {
     inrange <- apply(tmp,1,min) < buffer
     mask <- subset(mask, inrange)
     if (clipvert) {
-        if (!requireNamespace('rgeos', quietly = TRUE))
-            stop ("clipvert requires package rgeos")
-        SPDF <- SpatialPoints(coords = as.matrix(mask))
-        SP <- rgeos::gBuffer(spgeom = SPDF, width = attr(mask, "spacing")/2)
-        SLDF <- attr(mask, "SLDF")
-        newvert <- rgeos::gIntersection (SLDF, SP)
-        ldf <-  data.frame(ID = 1:length(newvert), rownames=1)
-        newvert <- SpatialLinesDataFrame(newvert, data = ldf)
-        attr(mask, "SLDF") <- newvert
+
+        # if (!requireNamespace('rgeos', quietly = TRUE))
+        #     stop ("clipvert currently requires package rgeos")
+        # SPDF <- SpatialPoints(coords = as.matrix(mask))
+        # SP <- rgeos::gBuffer(spgeom = SPDF, width = attr(mask, "spacing")/2)
+        # SLDF <- attr(mask, "SLDF")
+        # newvert <- rgeos::gIntersection (SLDF, SP)
+        # ldf <-  data.frame(ID = 1:length(newvert), rownames=1)
+        # newvert <- SpatialLinesDataFrame(newvert, data = ldf)
+        
+        sfmaskpoints <- st_sfc(st_multipoint(as.matrix(mask)))
+        sfmaskpoly <- st_buffer(sfmaskpoints, attr(msk, "spacing")/2)  
+        sfmasklines <- st_as_sf(attr(msk, "SLDF"))
+        newvert <- st_intersection (sfmasklines, sfmaskpoly)
+        attr(msk, "SLDF") <- as(newvert, 'Spatial')
     }
     mask
 }
