@@ -1,119 +1,10 @@
 ############################################################################################
 ## package 'secrlinear'
 ## utility.R
-## last changed 2014-08-28 2014-09-09 2014-10-31
-## 2014-11-07 allow breaks in lines
+## 2022-11-12 separate files for several functions
 ############################################################################################
 
 replacedefaults <- function (default, user) replace(default, names(user), user)
-
-along.line <- function (route, spacing, break.at = 0) {
-    ## Interpolate points along route at interval 'spacing'
-    ## route is matrix of vertices
-    np <- nrow(route)
-    if (nrow(route)<2) {
-        return (matrix(nrow=0, ncol=2))
-    }
-    dxy <- route[2:np,,drop=FALSE] - route[1:(np-1),,drop=FALSE]
-    d <- apply(dxy^2,1,sum)^0.5
-    d[break.at] <- 0    ## disjoint lines
-    cumd <- cumsum(d)
-    linelength <- cumd[np-1]
-    if (linelength == 0)
-        return (matrix(nrow=0, ncol=2))
-    else {
-
-                ipos <- seq(spacing/2, linelength, spacing)
-        first <- sapply(ipos, function(x) match(TRUE, cumd>=x))
-        cumd <- c(0,cumd)
-        add <- ipos - cumd[first]
-        pr <- add / d[first]
-        result <- route[first,, drop = FALSE] + dxy[first,] * pr
-        result <- cbind(result, rep(0, nrow(result)), ipos)
-        itermini <- c(cbind(break.at, break.at+1)[-1],np)
-        termini <- cbind(route[itermini,], rep(1, length(itermini)), cumd[itermini])
-        result <- rbind(result, termini)
-        result <- result[order(result[,4]), 1:3]
-        return(result)
-    }
-}
-#------------------------------------------------------------------------------------------
-## r <- matrix(runif(10), ncol=2)
-## plot(r, type = 'o')
-## tmp <- alongline(r, 0.1)
-## points(tmp, col='red')
-#------------------------------------------------------------------------------------------
-
-sample.line <- function(x, spacing) {
-    ## Function for systematic point sample
-    ## Input  -- SpatialLinesDataFrame
-    ## Output -- SpatialPointsDataFrame
-    ## default type=2 includes endpoints
-    sampleone <- function (i) {
-        lsub <- x[i,]
-        ns <- trunc(lgth[i] / spacing)
-        if (ns>0) {
-            xyL <- coordinates(lsub)[[1]]
-            nLine <- length(xyL)
-            nperLine <- sapply(xyL, nrow)
-            xy <- do.call(rbind, xyL)
-            breaks <- c(0, cumsum(nperLine)[-nLine])
-            lsamp <- along.line(xy, spacing, breaks)
-            nrl <- nrow(lsamp)
-            pdf <- data.frame(LineID = rep(i, nrl), Terminal = as.logical(lsamp[,3]))
-            pdf <- merge(pdf, lsub)
-            SpatialPointsDataFrame(lsamp[,1:2], data = pdf)
-        }
-        else NULL
-    }
-    if (!is(x, "SpatialLinesDataFrame")) stop("x must be SpatialLinesDataFrame")
-    lgth <- SpatialLinesLengths(x)
-    nr <- nrow(x)
-    ## For each feature
-    results <- sapply(1:nr, sampleone)
-    results <- results[!sapply(results, is.null)]
-    do.call(rbind, results)
-}
-
-getCentres <- function (xy) {
-    ## redundant
-    nrxy <- nrow(xy)
-    if (nrxy > 1) {
-        xy <- (xy[-1,] + xy[-nrxy,]) / 2
-        rownames(xy) <- 1:(nrxy-1)
-    }
-    xy
-}
-#------------------------------------------------------------------------------------------
-
-make.sldf <- function (coord, f) {
-    ## Form SpatialLinesDataFrame from coordinates data
-    ## coord is dataframe of coordinates - must include columns 'x','y'
-    ## f is vector of values by which to split coord rows
-    if (missing(f) & ('LineID' %in% names(coord)))
-        f <-  coord$LineID
-    if (missing(f))
-        coordlist <- list(coord)
-    else
-        coordlist <- split(coord[,c('x','y')], f)
-    S0 <- lapply(coordlist, Line)
-    S1 <- Lines(S0, ID = '1')
-    S2 <- SpatialLines(list(S1))
-    ldf <-  data.frame(ID = 1:length(S2), rownames=1)
-    SpatialLinesDataFrame(S2, data = ldf)
-}
-#------------------------------------------------------------------------------------------
-
-snapPointsToLinearMask <- function (xy, mask) {
-    gr <- attr(mask, 'graph')
-    geometryxy <- data.frame(x = V(gr)$x, y = V(gr)$y)
-    matchedxy <- nearesttrap(xy, geometryxy)
-    tempxy <- geometryxy[matchedxy,,drop = FALSE]
-    mostattributes(tempxy) <- attributes(xy)
-    tempxy
-}
-
-#------------------------------------------------------------------------------------------
 
 showedges <- function (mask, plt = TRUE, add = FALSE, type = c('all', 'noskips', 'skips'),
                        lengths = c(0,Inf), ...) {
@@ -154,30 +45,7 @@ showedges <- function (mask, plt = TRUE, add = FALSE, type = c('all', 'noskips',
         ed
 }
 #------------------------------------------------------------------------------------------
-getLineID <- function (mask, laboffset= rep(spacing(mask)*3,2), ...) {
-    if (is.null(covariates(mask)$LineID))
-        stop("LineID not found in covariates(mask)")
-    plot(mask, ...)
-    cat ("click on line \n")
-    output <- data.frame(Point=numeric(0), LineID=character(0))
-    repeat {
-        xy1 <- as.data.frame(locator(1))
-        if (nrow(xy1) < 1)
-            break
-        else {
-            matched <- nearesttrap(xy1, mask)
-            lineID <- as.character(covariates(mask)$LineID[matched])
-            cat("Point ", matched, " is on line ", lineID, "\n")
-            points(mask$x[matched], mask$y[matched], pch=1)
-            text (mask$x[matched] + laboffset[1], mask$y[matched] + laboffset[2],
-                  lineID, cex=0.7, col = 'red')
-            output<- rbind(output, data.frame(Point=matched, LineID=lineID, stringsAsFactors=FALSE))
-        }
-    }
-    invisible (output)
-}
 
-#------------------------------------------------------------------------------------------
 replot <- function(mask, xlim=NULL, ylim=NULL, ...) {
     if (is.null(xlim) | is.null(ylim)) {
         cat ("click on opposite corners \n")

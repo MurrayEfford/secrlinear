@@ -59,26 +59,24 @@ make.linearmask <- function (SLDF, spacing, spacingfactor, graph, cleanskips)  {
 read.linearmask <- function (file = NULL, data = NULL, spacing = 10, spacingfactor = 1.5,
                              graph = TRUE, cleanskips = TRUE, ...)
 {
-    if (is.null(data) & !is.null(file)) {
-        if (tools::file_ext(file) == 'shp') {
-            # spatialdata <- basename(file)
-            # spatialdata <- substring(spatialdata, 1, nchar(spatialdata)-4)
-            # if (!requireNamespace(rgdal)) stop ("package rgdal is currently required")
-            # data <- rgdal::readOGR(dsn = file, layer = spatialdata)
-            data <- as(st_read(file, quiet = TRUE), "Spatial")
+    if (is.null(data)) {
+        if (is.null(file)) stop("require one of 'file' or 'data'")
+        else {
+            if (tools::file_ext(file) == 'shp') {
+                data <- as(st_read(file, quiet = TRUE), "Spatial")
+            }
+            else {
+                data <- read.table (file, ...)
+            }
         }
-        else
-            data <- read.table (file, ...)
     }
-    else if (is.null(data))
-       stop("require one of 'file' or 'data'")
     isSLDF <- is(data, "SpatialLinesDataFrame")
     if (!isSLDF) {
         if (length(dim(data))!=2)
             stop ("require SpatialLinesDataFrame, dataframe or matrix",
                   " for 'data' input to read.linearmask")
         coln <- colnames(data)
-        ixy <- match(c('x', 'y'), coln)
+        ixy <- match(c('x', 'y'), tolower(coln))
         if (any(is.na(ixy))) ixy <- 1:2
         mask <- as.data.frame(data[,ixy])
         names(mask) <- c('x', 'y')
