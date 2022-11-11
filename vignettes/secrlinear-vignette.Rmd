@@ -26,6 +26,8 @@ mask. The linear mask and network distance function may be used directly in
 simulation and analysis of linear populations (e.g., `sim.popn` now has a 
 'linear' option for its argument 'model2D').
 
+See [secr-spatialdata.pdf] for additional information about the handling of spatial data in **secr**. **secrlinear** continues to rely on classes defined in **sp** (Pebesma and Bivand 2005).
+
 \vspace{12pt}
 
 # Introductory example
@@ -822,4 +824,6 @@ terminal traps) was adequate, even for males.
 [secr]: https://CRAN.R-project.org/package=secr/
 [secrlinear]: https://CRAN.R-project.org/package=secrlinear/
 [secrdesign]: https://CRAN.R-project.org/package=secrdesign/
+
+[secr-spatialdata.pdf]: https://www.otago.ac.nz/density/pdfs/secr-spatialdata.pdf
 
