@@ -1,8 +1,13 @@
-Changes in version 1.2.0 (2022-11-11)
+Changes in version 1.2.0 (2022-11-12)
+
+New features or changed behaviour of old functions
+    o   none 
 
 Other
-    o   removes dependency on rgeos, rgdal, maptools
-
+    o   add dependency on sf
+    o   remove dependency on rgeos, rgdal, maptools
+    o   housekeeping (vignette, files)
+    
 Changes in version 1.1.4 (2021-05-04)
 
 Other
