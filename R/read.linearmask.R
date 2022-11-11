@@ -61,9 +61,11 @@ read.linearmask <- function (file = NULL, data = NULL, spacing = 10, spacingfact
 {
     if (is.null(data) & !is.null(file)) {
         if (tools::file_ext(file) == 'shp') {
-            spatialdata <- basename(file)
-            spatialdata <- substring(spatialdata, 1, nchar(spatialdata)-4)
-            data <- readOGR(dsn = file, layer = spatialdata)
+            # spatialdata <- basename(file)
+            # spatialdata <- substring(spatialdata, 1, nchar(spatialdata)-4)
+            # if (!requireNamespace(rgdal)) stop ("package rgdal is currently required")
+            # data <- rgdal::readOGR(dsn = file, layer = spatialdata)
+            data <- as(st_read(file), "Spatial")
         }
         else
             data <- read.table (file, ...)
