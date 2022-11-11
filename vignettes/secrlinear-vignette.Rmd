@@ -50,7 +50,7 @@ warnings.
 
 ```{r setup, message = FALSE, warning = FALSE}
 library(secrlinear)   # also loads secr
-library(rgdal)        # to read shapefiles
+library(sp)
 library(igraph)       # to investigate edge lengths
 options(digits = 4)   # for more readable output
 inputdir <- system.file("extdata", package = "secrlinear")
@@ -148,7 +148,7 @@ coarseness of the discretization.
 ## Input from a polyline shapefile
 
 The 'file' argument of `read.linearmask` may be the name of a shapefile, including the
-'.shp' extension. The function `readOGR` from **rgdal** (Bivand et al. 2005) is used internally to create a SpatialLinesDataFrame from the shapefile. 
+'.shp' extension. The function `st_read` from package **sf** (Pebesma 2018) is used internally to read the shapefile, from which a SpatialLinesDataFrame is created. 
 
 We can try this with a shapefile for the Silverstream catchment near Dunedin,
 New Zealand, based on data from Land Information New Zealand (see
@@ -185,7 +185,7 @@ The 'data' argument of `read.linearmask` may be a SpatialLinesDataFrame object. 
 
 ```{r silvermask2, eval = FALSE}
 habitatmap <- paste0(inputdir, "/silverstream.shp")
-silverstreamSLDF <- rgdal::readOGR(dsn = habitatmap, layer = "silverstream")
+silverstreamSLDF <- as(st_read(habitatmap), 'Spatial')
 silverstreammask <- read.linearmask(data = silverstreamSLDF, spacing = 50)
 ```
 
@@ -669,10 +669,6 @@ the same fraction of a 2-sided linear normal home range.
 
 # References
 
-Bivand, R., Keitt, T and Rowlingson, B. (2016). rgdal: Bindings
-  for the Geospatial Data Abstraction Library. R package version 1.1-9.
-  https://CRAN.R-project.org/package=rgdal/
-  
 Borchers, D. L. and Efford, M. G. (2008) Spatially explicit maximum
    likelihood methods for capture--recapture studies. *Biometrics*
    **64**, 377--385.
@@ -693,6 +689,10 @@ ESRI (1998) *ESRI shapefile technical description*.
 
 Pebesma, E.J. and Bivand, R. S. (2005) Classes and methods for spatial
    data in R. *R News* **5(2)**, https://cran.r-project.org/doc/Rnews/.
+
+Pebesma, E. (2018) Simple features for R: standardized support for 
+spatial vector data. *The R Journal* 10(1), 439--446.
+  https://doi.org/10.32614/RJ-2018-009
 
 Royle, J. A., Chandler, R. B., Gazenski, K. D. and Graves,
 T. A. (2013) Spatial capture--recapture models for jointly estimating

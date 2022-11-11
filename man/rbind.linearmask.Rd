@@ -23,7 +23,7 @@ drawing a new systematic sample.
 
 \details{
 
-  The \pkg{maptools} function \code{spRbind} is used to combine the
+  The \pkg{sp} function \code{rbind} is used to combine the
   `SLDF' attributes of the inputs.
 
   If the input objects have a `graph' attribute then a new graph will be
@@ -39,7 +39,7 @@ drawing a new systematic sample.
 
 \seealso{
 
-  \code{\link{spRbind}}, \code{\link{read.linearmask}},
+  \code{\link{read.linearmask}},
   \link{linearmask}, \code{\link{subset.linearmask}}
 
   

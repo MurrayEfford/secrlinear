@@ -20,10 +20,10 @@ clipmask <- function (mask, traps, buffer = 100, clipvert = FALSE) {
         # newvert <- SpatialLinesDataFrame(newvert, data = ldf)
         
         sfmaskpoints <- st_sfc(st_multipoint(as.matrix(mask)))
-        sfmaskpoly <- st_buffer(sfmaskpoints, attr(msk, "spacing")/2)  
-        sfmasklines <- st_as_sf(attr(msk, "SLDF"))
+        sfmaskpoly <- st_buffer(sfmaskpoints, attr(mask, "spacing")/2)  
+        sfmasklines <- st_as_sf(attr(mask, "SLDF"))
         newvert <- st_intersection (sfmasklines, sfmaskpoly)
-        attr(msk, "SLDF") <- as(newvert, 'Spatial')
+        attr(mask, "SLDF") <- as(newvert, 'Spatial')
     }
     mask
 }

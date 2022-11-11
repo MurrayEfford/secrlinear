@@ -114,8 +114,7 @@ arvicola <- read.capthist(captfile = paste0(inputdir, "/Jun84capt.txt"),
 ## -- from text file of x-y coordinates
 glymemask <- read.linearmask(file = paste0(inputdir, "/glymemap.txt"), spacing = 4)
 ## -- from a previously constructed SpatialLinesDataFrame
-library(rgdal)
-SLDF <- rgdal::readOGR(dsn = paste0(inputdir,"/glymemap.shp"), layer = "glymemap")
+SLDF <- as(sf::st_read(paste0(inputdir,"/glymemap.shp")), 'Spatial')
 glymemask <- read.linearmask(data = SLDF, spacing = 4)
 
 ## display the mask and capture data

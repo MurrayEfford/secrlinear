@@ -24,7 +24,13 @@ importFrom(utils,
     packageVersion)
 
 importFrom(sf,
-    st_read)
+    st_read,
+    st_buffer,
+    st_intersection,
+    st_as_sf,
+    st_sfc,
+    st_multipoint
+    )
 
 importFrom (MASS, 
     eqscplot)

@@ -39,7 +39,7 @@ clipmask(mask, traps, buffer = 100, clipvert = FALSE)
 
   \code{clipvert = TRUE} causes the attribute ``SLDF'' (a
   SpatialLinesDataFrame) to be clipped to within spacing/2 of detectors,
-  using functions from \pkg{rgeos} (Bivand and Rundel 2014).
+  using functions from \pkg{sf} (Pebesma 2018).
 
 }
 
@@ -51,9 +51,9 @@ clipmask(mask, traps, buffer = 100, clipvert = FALSE)
 
 \references{
 
-  Bivand, R. and Rundel, C. (2014) rgeos: Interface to Geometry
-  Engine - Open Source (GEOS). R package version 0.3-4.
-  \url{https://CRAN.R-project.org/package=rgeos/}
+
+Pebesma, E. (2018) Simple features for R: standardized support for spatial vector data. \emph{The R Journal} \bold{10(1),} 439--446.
+  \doi{10.32614/RJ-2018-009}
 
 }
 
@@ -68,11 +68,9 @@ newmask <- clipmask(mask, trps, buffer = 200)
 plot(newmask)
 plot(trps, add = TRUE)
 
-if (require('rgeos')) {
-  newmask <- clipmask(mask, trps, buffer = 200, clipvert = TRUE)
-  plot(newmask)
-  plot(trps, add = TRUE)
-}
+newmask <- clipmask(mask, trps, buffer = 200, clipvert = TRUE)
+plot(newmask)
+plot(trps, add = TRUE)
 
 }
 
