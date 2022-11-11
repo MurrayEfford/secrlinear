@@ -50,7 +50,6 @@ warnings.
 
 ```{r setup, message = FALSE, warning = FALSE}
 library(secrlinear)   # also loads secr
-library(igraph)       # to investigate edge lengths
 options(digits = 4)   # for more readable output
 inputdir <- system.file("extdata", package = "secrlinear")
 ```
