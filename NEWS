@@ -1,7 +1,7 @@
-Changes in version 1.2.0 (2022-11-12)
+Changes in version 1.2.0 (2022-11-14)
 
 New features or changed behaviour of old functions
-    o   none 
+    o   new function 'branched'
 
 Other
     o   add dependency on sf
