@@ -3,6 +3,7 @@
 \alias{snapPointsToLinearMask}
 \alias{asgraph}
 \alias{getLineID}
+alias{branched}
 
 \title{ Utility Functions }
 
@@ -31,6 +32,8 @@ snapPointsToLinearMask(xy, mask)
 asgraph(mask)
 
 getLineID(mask, laboffset = rep(spacing(mask) * 3, 2), ...)
+
+branched(mask)
 
 }
 
@@ -86,6 +89,8 @@ Other utilities specific to editing graphs are documented in \link{edges}.
 
   \code{getLineID} invisibly returns a dataframe with columns 'Point'
   and 'LineID'.
+  
+  For \code{branched}, a logical value indicating whether the degree of any node exceeds 2.
   
 }
 

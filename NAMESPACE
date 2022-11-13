@@ -54,6 +54,7 @@ export (showedges)
 export (showpath)
 export (sim.linearpopn)
 export (snapPointsToLinearMask)
+export (branched)
 
 S3method (plot,   linearmask)
 S3method (plot,   linearpopn)
