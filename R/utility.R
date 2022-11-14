@@ -2,6 +2,7 @@
 ## package 'secrlinear'
 ## utility.R
 ## 2022-11-12 separate files for several functions
+## 2022-11-14 branched
 ############################################################################################
 
 replacedefaults <- function (default, user) replace(default, names(user), user)
@@ -169,3 +170,16 @@ cleanskipsgraph <- function (gr) {
 ## this should do it
 ## df <- data.frame(z = c(1,2), row.names= sapply(slot(Sl, "lines"), function(x) slot(x, "ID")))
 ## Sldf <- SpatialLinesDataFrame(Sl, data = df)
+
+
+#----------------------------------------------------------------------------------------
+branched <- function (mask) {
+  if (inherits(mask, "linearmask")) {
+    any(degree(attr(mask, 'graph'))>2)
+  }
+  else {
+    NA
+  }
+}
+#----------------------------------------------------------------------------------------
+

@@ -3,7 +3,7 @@
 \alias{snapPointsToLinearMask}
 \alias{asgraph}
 \alias{getLineID}
-alias{branched}
+\alias{branched}
 
 \title{ Utility Functions }
 
