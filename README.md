@@ -1,3 +1,7 @@
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/MurrayEfford/secrlinear/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MurrayEfford/secrlinear/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+  
 # secrlinear
 
 secrlinear: Spatially Explicit Capture-Recapture for Linear Habitats
