@@ -1,4 +1,6 @@
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/secrlinear)](https://cran.r-project.org/package=secrlinear)
+[![Downloads (total)](https://cranlogs.r-pkg.org/badges/grand-total/secrlinear)](https://www.r-pkg.org/pkg/secrlinear)
 [![R-CMD-check](https://github.com/MurrayEfford/secrlinear/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MurrayEfford/secrlinear/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
   
