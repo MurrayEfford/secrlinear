@@ -13,10 +13,10 @@ An \pkg{secr} add-on package for linear habitat models.
 
 \details{
 \tabular{ll}{
-Package: \tab secr\cr
+Package: \tab secrlinear\cr
 Type: \tab Package\cr
 Version: \tab 1.2.0\cr
-Date: \tab 2022-11-14\cr
+Date: \tab 2023-05-19\cr
 License: \tab GNU General Public License Version 2 or later\cr
 }
 
