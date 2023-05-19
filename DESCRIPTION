@@ -1,7 +1,7 @@
 Package: secrlinear
 Type: Package
 Title: Spatially Explicit Capture-Recapture for Linear Habitats
-Version: 1.2.0
+Version: 1.2.1
 Depends: R (>= 3.5.0), secr (>= 3.0.1)
 Imports: MASS, methods, sp, igraph, sf
 Suggests: knitr, rmarkdown, secrdesign, testthat
