@@ -1,7 +1,18 @@
+Changes in version 1.2.2 (2023-10-17)
+
+New features or changed behaviour of old functions
+    o   none
+
+Other
+    o   correct overview Rd file alias
+    
 Changes in version 1.2.1 (2023-05-19)
 
 New features or changed behaviour of old functions
     o   none
+    
+Other
+    o  updated citation file
 
 Changes in version 1.2.0 (2023-05-19)
 
