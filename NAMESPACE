@@ -29,7 +29,8 @@ importFrom(sf,
     st_intersection,
     st_as_sf,
     st_sfc,
-    st_multipoint
+    st_multipoint,
+    st_is_empty
     )
 
 importFrom (MASS, 
@@ -55,6 +56,7 @@ export (showpath)
 export (sim.linearpopn)
 export (snapPointsToLinearMask)
 export (branched)
+export (linearkd)
 
 S3method (plot,   linearmask)
 S3method (plot,   linearpopn)
