@@ -4,13 +4,14 @@
 ## last changed 2014-08-30; 2014-10-26 graph attribute;
 ## 2014-10-31 optional read from shapefile
 ## 2014-11-03 make.linearmask (called by read.linearmask and rbind.linearmask)
+## 2023-12-15 drop empty geometries from sf object before as(...,"Spatial)
 ## "this resource by B. Rowlingson is quite inspiring :"
 ## https://rstudio-pubs-static.s3.amazonaws.com/1572_7599552b60454033a0d5c5e6d2e34ffb.html
 ############################################################################################
 
 make.linearmask <- function (SLDF, spacing, spacingfactor, graph, cleanskips)  {
     ## for bounding box...
-    tmp <- lapply(coordinates(SLDF), function(x) do.call("rbind", x))
+    tmp <- lapply(sp::coordinates(SLDF), function(x) do.call("rbind", x))
     tmp <- do.call(rbind, tmp)
     xyl <- lapply(as.data.frame(tmp), range)
     names(xyl) <- c('x','y')
@@ -22,7 +23,7 @@ make.linearmask <- function (SLDF, spacing, spacingfactor, graph, cleanskips)  {
         covariates(mask) <- data.frame(LineID = numeric(0))
     }
     else {
-         mask <- data.frame(coordinates(maskSPDF))         ## dataframe
+         mask <- data.frame(sp::coordinates(maskSPDF))         ## dataframe
          names(mask) <- c('x', 'y')
     }
     attr(mask, 'SLDF') <- SLDF
@@ -59,17 +60,20 @@ make.linearmask <- function (SLDF, spacing, spacingfactor, graph, cleanskips)  {
 read.linearmask <- function (file = NULL, data = NULL, spacing = 10, spacingfactor = 1.5,
                              graph = TRUE, cleanskips = TRUE, ...)
 {
-    if (is.null(data)) {
+  if (is.null(data)) {
         if (is.null(file)) stop("require one of 'file' or 'data'")
         else {
             if (tools::file_ext(file) == 'shp') {
-                data <- as(st_read(file, quiet = TRUE), "Spatial")
+              data <- st_read(file, quiet = TRUE)
+              data <- data[!st_is_empty(data),,drop = FALSE]  # 2023-12-15
+              data <- as(data, "Spatial")
             }
             else {
                 data <- read.table (file, ...)
             }
         }
     }
+  
     isSLDF <- is(data, "SpatialLinesDataFrame")
     if (!isSLDF) {
         if (length(dim(data))!=2)
