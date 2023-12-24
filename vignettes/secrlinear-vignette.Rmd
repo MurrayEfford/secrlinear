@@ -353,7 +353,7 @@ value of the 'popn' argument of `sim.capthist`.
 The linear mask supplied to `sim.linearpopn` is retained as an
 attribute of the simulated population and used in `sim.capthist` as an
 argument of the supplied 'userdist' function. This enables detection
-probabilities to be modelled in `sim.capthist` using network the
+probabilities to be modelled in `sim.capthist` using the network
 distance between each detector and an animal's home-range centre.
 
 Here's how it works, carrying on our Silverstream example:
