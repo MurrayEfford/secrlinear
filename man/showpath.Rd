@@ -32,7 +32,7 @@ showpath(mask, add = FALSE, ...)
   calculations.
   
   The path shown is a shortest path as determined by function
-\code{\link{get.shortest.paths}} of the \pkg{igraph}
+\code{\link[igraph]{get.shortest.paths}} of the \pkg{igraph}
 package. There may be others.
 
 }

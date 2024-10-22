@@ -98,7 +98,7 @@ Other utilities specific to editing graphs are documented in \link{edges}.
 
   \code{\link{checkmoves}}
   \code{\link{make.line}}, \code{\link{networkdistance}},
-  \code{\link{SpatialLinesDataFrame}},
+  \code{\link[sp]{SpatialLinesDataFrame}},
   \code{\link{showedges}}, \code{\link{deleteedges}}, \code{\link{addedges}}
 
 }

@@ -47,7 +47,7 @@
   
   The main plotting in \code{plot.linearmask} is done by
   \code{plot.mask} with \code{dots = TRUE}. See the help for
-  \code{\link{plot.mask}} for details of options such as \code{add}. The
+  \code{\link[secr]{plot.mask}} for details of options such as \code{add}. The
   lines of the SpatialLinesdataFrame are overplotted unless
   \code{linecol = NA}.
   
@@ -65,13 +65,13 @@
 
   \code{plot.linearpopn} does not return a value.
   
-  \code{plot.linearmask} invisibly returns legend details as for \code{\link{plot.mask}}.
+  \code{plot.linearmask} invisibly returns legend details as for \code{\link[secr]{plot.mask}}.
   
 }
 
 \seealso{
 
-   \code{\link{sim.linearpopn}},  \code{\link{plot.mask}}, \code{\link[secr]{plot.popn}}
+   \code{\link{sim.linearpopn}},  \code{\link[secr]{plot.mask}}, \code{\link[secr]{plot.popn}}
   
  }
  

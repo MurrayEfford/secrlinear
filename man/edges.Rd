@@ -1,4 +1,5 @@
 \name{edges}
+\alias{edges}
 \alias{showedges}
 \alias{replot}
 \alias{addedges}

@@ -7,7 +7,7 @@
 
   Build \pkg{secr} `traps' object, positioning detectors along a
   predefined set of lines. \code{make.line} is in the same family as
-  \pkg{secr} functions \code{\link{make.grid}} etc.
+  \pkg{secr} functions \code{\link[secr]{make.grid}} etc.
   
 }
 

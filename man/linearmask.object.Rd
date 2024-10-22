@@ -77,7 +77,7 @@
 
 \seealso{
     
-  \code{\link{read.linearmask}}, \code{\link{mask}},
+  \code{\link{read.linearmask}}, \code{\link[secr]{mask}},
   \code{\link{showpath}}, \code{\link{networkdistance}}
 
 }
