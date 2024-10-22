@@ -60,6 +60,9 @@ McSwiggan, G., Baddeley, A. and Nair, G. 2016. Kernel density estimation on a li
 
 }
 
+\section{Warning}{This function is still in development: there are details to 
+resolve concerning terminal vertices etc. }
+
 \examples{
 
 # simulate some points

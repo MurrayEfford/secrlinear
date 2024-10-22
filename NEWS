@@ -1,4 +1,9 @@
-Changes in version 1.2.3 (2024-10-22)
+Changes in version 1.2.5 (2024-10-22)
+
+New features or changed behaviour of old functions
+    o   none
+
+Changes in version 1.2.4 (2024-10-22)
 
 New features or changed behaviour of old functions
     o   linearkd() kernel density smoother
@@ -6,6 +11,9 @@ New features or changed behaviour of old functions
 Other
     o   read.linearmask() drops empty geometries from sf object
     o   builtin glymemask object oriented to match arvicola
+    o   include package anchors in doc links
+    o   tweak vignette secrdesign example
+    o   Authors field in DESCRIPTION
     
 Changes in version 1.2.2 (2023-10-17)
 

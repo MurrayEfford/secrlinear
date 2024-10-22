@@ -1,26 +1,24 @@
 ############################################################################################
 ## package 'secrlinear'
 ## asgraph.R
-## last changed 2022-11-12
+## last changed 2022-11-12, 2024-10-22
 ############################################################################################
 
 asgraph <- function (mask) {
     
     ## "mask" is a provisional mask including line termini that will be used for the graph
     ## but dropped from mask points
-    
     ## determine connection by Euclidean distance between points
     tempdist <- as.matrix(dist(mask))
     spacingfactor <- attr(mask, 'spacingfactor')
-    tempdist[tempdist > (spacing(mask) * spacingfactor)] <- NA
+    tempdist[tempdist >= (spacing(mask) * spacingfactor)] <- NA   # >= 2024-10-22
     tempdist[upper.tri(tempdist, diag = TRUE)] <- NA
-    
     ## value is the number of edges to create between a pair of vertices
     ## use only the lower triangle of distance matrix for undirected graph
     tempdist[!is.na(tempdist)] <- 1
     tempdist[is.na(tempdist)] <- 0
     graph <- graph.adjacency(tempdist, mode = 'lower')
-    
+
     ## force within-line spacings to actual separation along network,
     ## known because we made it so with along.line
     ed <- get.edges(graph, E(graph))
