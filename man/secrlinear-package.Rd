@@ -45,8 +45,9 @@ Other useful functions are:
 }
 
 Documentation is provided in a vignette
-\url{../doc/secrlinear-vignette.pdf} and in the pdf version of the help
-pages \url{../doc/secrlinear-manual.pdf}
+\href{../doc/secrlinear-vignette.pdf}{secrlinear-vignette.pdf} and in the pdf 
+version of the \href{https://CRAN.R-project.org/package=secrlinear/secrlinear.pdf}{help
+pages}.
 
 The package draws on the packages \pkg{sp} (Pebesma and Bivand 2005) and
 \pkg{igraph} (Csardi and Nepusz 2006).
