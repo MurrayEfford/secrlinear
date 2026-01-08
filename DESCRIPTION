@@ -18,7 +18,7 @@ Suggests:
     spatstat.linnet,
     testthat
 VignetteBuilder: knitr
-Date: 2025-07-29
+Date: 2026-01-09
 Authors@R: person(given = "Murray",
     family = "Efford",
     role = c("aut", "cre"),
